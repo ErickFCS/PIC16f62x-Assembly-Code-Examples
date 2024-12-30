@@ -1,0 +1,216 @@
+%CMF
+# %PSECTS Section
+# For each object file, details of its psects are enumerated here.
+# The begining of the section is indicated by %PSECTS.  The first
+# line indicates the name of the first object file, e.g.
+#    $foo.obj
+# Each line that follows describes a psect in that object file, until
+# the next object file.  The lines that describe a psect have the
+# format:
+#    <psect name> <class name> <space> <link address> <load addresses> <length> <delta> <reloc>
+# All addresses and the length are given in unqualified hexadecimal
+# in delta units.  Any other numeric values are decimal.
+%PSECTS
+$build\main.o
+por_vec CODE 0 0 0 59 2 1
+config CONFIG 4 2007 2007 1 2 1
+# %UNUSED Section
+# This section enumerates the unused ranges of each CLASS. Each entry
+# is described on a single line as follows:
+#    <class name> <range> <delta>
+# Addresses given in the range are in hexadecimal and units of delta.
+%UNUSED
+RAM 20-6F 1
+RAM A0-EF 1
+RAM 120-14F 1
+BANK0 20-6F 1
+BANK1 A0-EF 1
+BANK2 120-14F 1
+CONST 59-7FF 2
+ENTRY 59-7FF 2
+IDLOC 2000-2003 2
+CODE 59-7FF 2
+SFR2 100-11F 1
+SFR3 180-1EF 1
+COMMON 70-7F 1
+EEDATA 2100-217F 2
+STRCODE 59-7FF 2
+STRING 59-7FF 2
+# %LINETAB Section
+# This section enumerates the file/line to address mappings.
+# The beginning of the section is indicated by %LINETAB.
+# The first line indicates the name of the first object file, e.g.
+#   $foo.obj
+# Each line that follows describes a single mapping until the next
+# object file.  Mappings have the following format:
+#    <address> <psect name> <class name> ><line number>:<file name>
+# The address is absolute and given given in unqualified hex 
+# in delta units of the psect. All mappings within an object file
+# are in ascending order of addresses.
+# All other numeric values are in decimal.
+%LINETAB
+$build\main.o
+0 por_vec CODE >26:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+1 por_vec CODE >29:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+4 por_vec CODE >34:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+5 por_vec CODE >35:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+6 por_vec CODE >36:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+7 por_vec CODE >37:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+8 por_vec CODE >38:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+9 por_vec CODE >40:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+A por_vec CODE >41:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+B por_vec CODE >42:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+C por_vec CODE >43:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+D por_vec CODE >45:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+E por_vec CODE >46:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+F por_vec CODE >47:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+10 por_vec CODE >48:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+11 por_vec CODE >49:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+12 por_vec CODE >54:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+13 por_vec CODE >56:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+14 por_vec CODE >57:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+15 por_vec CODE >58:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+16 por_vec CODE >59:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+17 por_vec CODE >60:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+18 por_vec CODE >61:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+19 por_vec CODE >62:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+1A por_vec CODE >63:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+1B por_vec CODE >64:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+1C por_vec CODE >66:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+1D por_vec CODE >68:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+1E por_vec CODE >69:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+1F por_vec CODE >71:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+20 por_vec CODE >72:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+21 por_vec CODE >74:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+22 por_vec CODE >75:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+23 por_vec CODE >77:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+24 por_vec CODE >78:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+25 por_vec CODE >80:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+26 por_vec CODE >81:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+27 por_vec CODE >83:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+28 por_vec CODE >84:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+29 por_vec CODE >86:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+2A por_vec CODE >87:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+2B por_vec CODE >88:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+2C por_vec CODE >89:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+2D por_vec CODE >90:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+2E por_vec CODE >92:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+2F por_vec CODE >94:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+30 por_vec CODE >95:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+31 por_vec CODE >96:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+32 por_vec CODE >98:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+33 por_vec CODE >99:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+34 por_vec CODE >101:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+35 por_vec CODE >102:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+36 por_vec CODE >104:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+37 por_vec CODE >106:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+38 por_vec CODE >107:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+39 por_vec CODE >109:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+3A por_vec CODE >110:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+3B por_vec CODE >111:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+3C por_vec CODE >112:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+3D por_vec CODE >113:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+3E por_vec CODE >114:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+3F por_vec CODE >115:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+40 por_vec CODE >117:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+41 por_vec CODE >118:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+42 por_vec CODE >119:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+43 por_vec CODE >121:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+44 por_vec CODE >122:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+45 por_vec CODE >123:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+46 por_vec CODE >124:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+47 por_vec CODE >125:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+48 por_vec CODE >126:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+49 por_vec CODE >127:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+4A por_vec CODE >128:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+4B por_vec CODE >129:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+4C por_vec CODE >130:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+4D por_vec CODE >131:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+4E por_vec CODE >132:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+4F por_vec CODE >134:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+50 por_vec CODE >136:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+51 por_vec CODE >137:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+52 por_vec CODE >138:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+53 por_vec CODE >139:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+54 por_vec CODE >140:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+55 por_vec CODE >142:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+56 por_vec CODE >144:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+57 por_vec CODE >145:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+58 por_vec CODE >147:D:\USER\Documents\My_files\ComputerScienceNew\Test\Asm\school\LedShiftConfigFrec\main.asm
+# %SYMTAB Section
+# An enumeration of all symbols in the program.
+# The beginning of the section is indicated by %SYMTAB.
+# Each line describes a single symbol as follows:
+#    <label> <value> [-]<load-adj> <class> <space> <psect> <file-name>
+# The value and load-adj are both in unqualified hexadecimal.
+# All other numeric values are in decimal.  The load-adj is the
+# quantity one needs to add to the symbol value in order to obtain the load
+# address of the symbol.  This value may be signed. If the symbol
+# was defined in a psect then <psect> will be "-". File-name
+# is the name of the object file in which the symbol was defined.
+%SYMTAB
+__Hspace_0 59 0 ABS 0 - -
+__Hspace_1 0 0 ABS 0 - -
+__Hspace_3 0 0 ABS 0 - -
+__Hspace_4 400F 0 ABS 0 - -
+__Hudata_bank0 0 0 ABS 0 udata_bank0 -
+__Hudata_bank1 0 0 ABS 0 udata_bank1 -
+__Hudata_bank2 0 0 ABS 0 udata_bank2 -
+__L__absolute__ 0 0 ABS 0 __absolute__ -
+__Hpor_vec B2 0 CODE 0 por_vec -
+__Hedata 0 0 ABS 0 edata -
+__Hudata 0 0 ABS 0 udata -
+__Hconfig 4010 0 CONFIG 4 config -
+__Ledata 0 0 ABS 0 edata -
+__Ludata 0 0 ABS 0 udata -
+__Hcode 0 0 ABS 0 code -
+__Hdata 0 0 ABS 0 data -
+__Lcode 0 0 ABS 0 code -
+__Ldata 0 0 ABS 0 data -
+__S0 0 0 ABS 0 - -
+__S1 0 0 ABS 0 - -
+__S3 0 0 ABS 0 - -
+__Lconfig 0 0 CONFIG 4 config -
+__Lspace_0 0 0 ABS 0 - -
+__Lspace_1 0 0 ABS 0 - -
+__Lspace_3 0 0 ABS 0 - -
+__Lspace_4 0 0 ABS 0 - -
+__Lpor_vec 0 0 CODE 0 por_vec -
+__Ludata_bank0 0 0 ABS 0 udata_bank0 -
+__Ludata_bank1 0 0 ABS 0 udata_bank1 -
+__Ludata_bank2 0 0 ABS 0 udata_bank2 -
+__H__absolute__ 0 0 ABS 0 __absolute__ -
+__Hudata_shr 0 0 ABS 0 udata_shr -
+__Ludata_shr 0 0 ABS 0 udata_shr -
+# %SPLITSTAB Section
+# This section enumerates all the psect splits performed by the assembler.
+# The beginning of the section is indicated by %SPLITSTAB.
+# Each line is a record a particular split, where the parent psect is on
+# the left and the child on the right.  Note that a child psect is always
+# split form the top of the parent psect. All splits from a given parent
+# are listed in the order in which they occurred.
+%SPLITSTAB
+# %DABS Section
+# This section contains a table of all usuage of the assember
+# directive DABS in the program. Each line has the following format:
+#   <name> <space> <address> <size>
+# If the DABS was originally labelled then that shall be <name>,
+# otherwise name will be "-".  The <space> number is in decimal.
+# <address> and <size> are in byte units as unqaulified hexadecimal
+%DABS
+# %SEGMENTS Section
+# This sections enumerates the segments of the program.  Each segment
+# is described on a single line as follows:
+#    <name> <space> <link address> <file address> <size> <delta>
+# Addresses and size are in unqualified hexadecimal.  The link address
+# and size are in units of delta. The file address is in units of bytes.
+# All other numeric quantities are in decimal.
+%SEGMENTS
+# %NOTES Section
+# This section contains data of all the note-psects.  The beginning of the section
+# is indicated by %NOTES. The first line indicates the name and decimal
+# byte-length of the first note-psect, e.g.
+#   $codecov_info_hdr 16
+# Each line that follows contains the byte-data of the psect in hexadecimal as a
+# space-separated list. These lines are limited to 16 bytes of data.
+%NOTES

@@ -1,0 +1,176 @@
+
+
+Microchip MPLAB XC8 Assembler V2.41 build 20230208172133 
+                                                                                                           Thu Sep 12 14:43:39 2024
+
+
+     1                           	processor	16F628A
+     2                           	pagewidth 132
+     3                           	psect	udata_shr,global,class=COMMON,space=1,delta=1,noexec
+     4                           	psect	udata,global,class=RAM,space=1,delta=1,noexec
+     5                           	psect	udata_bank0,global,class=BANK0,space=1,delta=1,noexec
+     6                           	psect	udata_bank1,global,class=BANK1,space=1,delta=1,noexec
+     7                           	psect	udata_bank2,global,class=BANK2,space=1,delta=1,noexec
+     8                           	psect	code,global,class=CODE,delta=2
+     9                           	psect	data,global,class=STRCODE,delta=2,noexec
+    10                           	psect	edata,global,class=EEDATA,space=3,delta=2,noexec
+    11                           	psect	por_vec,global,abs,ovrld,class=CODE,delta=2
+    12                           	psect	config,global,abs,ovrld,class=CONFIG,space=4,delta=2,noexec
+    13     0008                     
+    14                           	psect	edata
+    15     0000                     stk_offset	set	0
+    16     0000                     auto_size	set	0
+    17                           
+    18                           ; stack_auto defines a symbol /name/_offset which equates to the
+    19                           ; stack offset of the auto object in question
+    20     0000                     
+    21                           ; stack_param defines a symbol /name/_offset which equates to the
+    22                           ; stack offset of the parameter object in question
+    23     0000                     
+    24                           ; alloc_stack adjusts the SP to allocate space for auto objects
+    25                           ; it also links in to the btemp symbol so that can be used
+    26     0000                     
+    27                           ; restore_stack adjusts the SP to remove all auto and parameter
+    28                           ; objects from the stack prior to returning from a function
+    29     0000                     main:
+    30                           
+    31                           	psect	por_vec
+    32     0000                     	org	0
+    33     0000  2003               	call	init
+    34     0001                     loop:
+    35     0001  201F               	call	work
+    36     0002  2801               	goto	loop
+    37     0003                     init:
+    38     0003  1683               	bsf	3,5	; set RP5 to 1 Now in bank 1
+    39     0004  3000               	movlw	0	; w=0x00
+    40     0005  0086               	movwf	134	; TRISB=W=0x00 pinmode TRISB output(0)
+    41     0006  3000               	movlw	0	; w=0x00
+    42     0007  0085               	movwf	133	; TRISA=W=0x00 pinmode TRISA output(0)
+    43     0008  1281               	bcf	129,5	; OPTION_REG(5)=0 ((OPTION_REG) and 07Fh), 5=0
+    44     0009  1181               	bcf	129,3	; OPTION_REG(3)=0 ((OPTION_REG) and 07Fh), 3=0
+    45     000A  1081               	bcf	129,1	; OPTION_REG(0)=0 ((OPTION_REG) and 07Fh), 0=0
+    46     000B  1283               	bcf	3,5	; set RP5 to 0 Now in bank 0
+    47     000C  3007               	movlw	7	; W=0x07
+    48     000D  009F               	movwf	31	; CMCON=W=0x07
+    49     000E  3000               	movlw	0	; W=0x00
+    50     000F  00A1               	movwf	33	; table0=W=0x00
+    51     0010  3000               	movlw	0	; W=0x00
+    52     0011  00A2               	movwf	34	; table1=W=0x00
+    53     0012  3000               	movlw	0	; W=0x00
+    54     0013  00A3               	movwf	35	; table2=W=0x00
+    55     0014  3021               	movlw	33	; W=0x21
+    56     0015  00A4               	movwf	36	; table_index=W=0x00
+    57     0016  3000               	movlw	0	; W=0x00
+    58     0017  00A5               	movwf	37	; currentIndex=W=0x00
+    59     0018  3000               	movlw	0	; W=0x00
+    60     0019  0086               	movwf	6	; PORTB=W=0x00
+    61     001A  3001               	movlw	1	; W=0x01
+    62     001B  00A6               	movwf	38	; currentChannel=W=0x01
+    63     001C  3080               	movlw	128	; W=0x20
+    64     001D  00A0               	movwf	32	; help=W=0x20
+    65     001E  0008               	return
+    66     001F                     work:
+    67     001F  1D0B               	btfss	11,2	; if INTCON(2)==((INTCON) and 07Fh), 2==0 then:
+    68     0020  281F               	goto	work
+    69     0021  3086               	movlw	134	; w=0x86
+    70     0022  0081               	movwf	1	; TMR0=w=0x86
+    71     0023  110B               	bcf	11,2	; INTCON(2)=((INTCON) and 07Fh), 2=0
+    72     0024  202B               	call	changeChannel
+    73     0025  0BA0               	decfsz	32,f	; if help - 1 != 0 then:
+    74     0026  281F               	goto	work
+    75     0027  3080               	movlw	128	; w=0x20
+    76     0028  00A0               	movwf	32	; help=w=0x20
+    77     0029  203D               	call	incrementDisplay
+    78     002A  0008               	return
+    79     002B                     changeChannel:
+    80     002B  0186               	clrf	6	; PORTB=0x00
+    81     002C  0185               	clrf	5	; PORTA=0x00
+    82     002D  1003               	bcf	3,0	; STATUS(0)=0
+    83     002E  1926               	btfsc	38,2	; if currentChannel(2)==1 then:
+    84     002F  1403               	bsf	3,0	; STATUS(1)=1
+    85     0030  0DA6               	rlf	38,f	; rotate left through carry
+    86     0031  3007               	movlw	7	; W=0x07
+    87     0032  05A6               	andwf	38,f	; and(currentChannel, W)
+    88                           
+    89                           ;SWAPF currentChannel, W ; swap(currentChannel)
+    90     0033  0826               	movf	38,w
+    91     0034  0086               	movwf	6
+    92     0035  1826               	btfsc	38,0	; if currentChannel(0)==1 then
+    93                           
+    94                           ;IORWF table0, W
+    95     0036  0821               	movf	33,w
+    96     0037  18A6               	btfsc	38,1	; if currentChannel(1)==1 then
+    97                           
+    98                           ;IORWF table1, W
+    99     0038  0822               	movf	34,w
+   100     0039  1926               	btfsc	38,2	; if currentChannel(2)==1 then
+   101                           
+   102                           ;IORWF table2, W
+   103     003A  0823               	movf	35,w
+   104                           
+   105                           ;MOVWF PORTB
+   106     003B  0085               	movwf	5
+   107     003C  0008               	return
+   108     003D                     incrementDisplay:
+   109     003D  0824               	movf	36,w
+   110     003E  0725               	addwf	37,w
+   111     003F  0084               	movwf	4
+   112     0040  0A80               	incf	0,f
+   113     0041  3002               	movlw	2
+   114     0042  0225               	subwf	37,w
+   115     0043  1903               	btfsc	3,2
+   116     0044  2051               	call	limit200
+   117     0045  300A               	movlw	10
+   118     0046  0200               	subwf	0,w
+   119     0047  1D03               	btfss	3,2
+   120     0048  0008               	return
+   121     0049  0180               	clrf	0
+   122     004A  0AA5               	incf	37,f
+   123     004B  3003               	movlw	3
+   124     004C  0225               	subwf	37,w
+   125     004D  1D03               	btfss	3,2
+   126     004E  203D               	call	incrementDisplay
+   127     004F  01A5               	clrf	37
+   128     0050  0008               	return
+   129     0051                     limit200:
+   130     0051  3002               	movlw	2
+   131     0052  0200               	subwf	0,w
+   132     0053  1D03               	btfss	3,2
+   133     0054  0008               	return
+   134     0055  300A               	movlw	10
+   135     0056  0080               	movwf	0
+   136     0057  0008               	return
+   137                           
+   138                           	psect	config
+   139                           
+   140                           ;Config register CONFIG @ 0x2007
+   141                           ;	Oscillator Selection bits
+   142                           ;	FOSC = INTOSCIO, INTOSC oscillator: I/O function on RA6/OSC2/CLKOUT pin, I/O function on RA7/OSC1/
+      +                          CLKIN
+   143                           ;	Watchdog Timer Enable bit
+   144                           ;	WDTE = OFF, WDT disabled
+   145                           ;	Power-up Timer Enable bit
+   146                           ;	PWRTE = OFF, PWRT disabled
+   147                           ;	RA5/MCLR/VPP Pin Function Select bit
+   148                           ;	MCLRE = OFF, RA5/MCLR/VPP pin function is digital input, MCLR internally tied to VDD
+   149                           ;	Brown-out Detect Enable bit
+   150                           ;	BOREN = ON, BOD enabled
+   151                           ;	Low-Voltage Programming Enable bit
+   152                           ;	LVP = OFF, RB4/PGM pin has digital I/O function, HV on MCLR must be used for programming
+   153                           ;	Data EE Memory Code Protection bit
+   154                           ;	CPD = OFF, Data memory code protection off
+   155                           ;	Flash Program Memory Code Protection bit
+   156                           ;	CP = OFF, Code protection off
+   157     2007                     	org	8199
+   158     2007  3F58               	dw	16216
+
+
+Microchip Technology PIC Macro Assembler V2.41 build 20230208172133 
+Symbol Table                                                                                               Thu Sep 12 14:43:39 2024
+
+                       FSR 0004                        INDF 0000                        TMR0 0001                        help 0020  
+                      main 0000                        init 0003                        loop 0001                        work 001F  
+                     PORTA 0005                       PORTB 0006                       TRISA 0085                       TRISB 0086  
+                    INTCON 000B                      STATUS 0003                      table0 0021                      table1 0022  
+                    table2 0023                currentIndex 0025                  OPTION_REG 0081                    limit200 0051  
+             changeChannel 002B                 table_index 0024            incrementDisplay 003D              currentChannel 0026  

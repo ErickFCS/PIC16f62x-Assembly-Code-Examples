@@ -1,0 +1,128 @@
+
+
+Microchip MPLAB XC8 Assembler V2.41 build 20230208172133 
+                                                                                                           Thu Aug 29 20:13:19 2024
+
+
+     1                           	processor	16F628A
+     2                           	pagewidth 132
+     3                           	psect	udata_shr,global,class=COMMON,space=1,delta=1,noexec
+     4                           	psect	udata,global,class=RAM,space=1,delta=1,noexec
+     5                           	psect	udata_bank0,global,class=BANK0,space=1,delta=1,noexec
+     6                           	psect	udata_bank1,global,class=BANK1,space=1,delta=1,noexec
+     7                           	psect	udata_bank2,global,class=BANK2,space=1,delta=1,noexec
+     8                           	psect	code,global,class=CODE,delta=2
+     9                           	psect	data,global,class=STRCODE,delta=2,noexec
+    10                           	psect	edata,global,class=EEDATA,space=3,delta=2,noexec
+    11                           	psect	por_vec,global,abs,ovrld,class=CODE,delta=2
+    12                           	psect	table,global,abs,ovrld,class=CODE,delta=2
+    13                           	psect	config,global,abs,ovrld,class=CONFIG,space=4,delta=2,noexec
+    14     0008                     
+    15                           	psect	edata
+    16     0000                     stk_offset	set	0
+    17     0000                     auto_size	set	0
+    18                           
+    19                           ; stack_auto defines a symbol /name/_offset which equates to the
+    20                           ; stack offset of the auto object in question
+    21     0000                     
+    22                           ; stack_param defines a symbol /name/_offset which equates to the
+    23                           ; stack offset of the parameter object in question
+    24     0000                     
+    25                           ; alloc_stack adjusts the SP to allocate space for auto objects
+    26                           ; it also links in to the btemp symbol so that can be used
+    27     0000                     
+    28                           ; restore_stack adjusts the SP to remove all auto and parameter
+    29                           ; objects from the stack prior to returning from a function
+    30     0000                     main:
+    31                           
+    32                           	psect	por_vec
+    33     0000                     	org	0
+    34     0000  2003               	call	init
+    35     0001                     loop:
+    36     0001  2010               	call	work
+    37     0002  2801               	goto	loop
+    38     0003                     init:
+    39     0003  1683               	bsf	3,5	; set RP5 to 1 Now in bank 1
+    40     0004  3000               	movlw	0	; w=0x00
+    41     0005  0086               	movwf	134	; trisb=w=0x00 pinmode trisb output(0)
+    42     0006  1281               	bcf	129,5	; OPTION_REG(5)=0 ((OPTION_REG) and 07Fh), 5=0
+    43     0007  1181               	bcf	129,3	; OPTION_REG(3)=0 ((OPTION_REG) and 07Fh), 3=0
+    44     0008  1283               	bcf	3,5	; set RP5 to 0 Now in bank 0
+    45     0009  3007               	movlw	7	; W=0x07
+    46     000A  009F               	movwf	31	; CMCOM=W=0x07
+    47     000B  3000               	movlw	0	; W=0x00
+    48     000C  00A0               	movwf	32	; index=W=0x00
+    49     000D  3010               	movlw	16	; w=0x10
+    50     000E  00A1               	movwf	33	; help=w=0x10
+    51     000F  0008               	return
+    52     0010                     work:
+    53     0010  1D0B               	btfss	11,2	; if INTCON(2)==((INTCON) and 07Fh), 2==0 then:
+    54     0011  2810               	goto	work
+    55     0012  300C               	movlw	12	; w=0x3d
+    56     0013  0081               	movwf	1	; TMR0=w=0x3d
+    57     0014  110B               	bcf	11,2	; INTCON(2)=((INTCON) and 07Fh), 2=0
+    58     0015  0BA1               	decfsz	33,f	; if help - 1 != 0 then:
+    59     0016  2810               	goto	work
+    60     0017  3010               	movlw	16	; w=0x10
+    61     0018  00A1               	movwf	33	; help=w=0x10
+    62                           
+    63                           ;MOVLW 0x01
+    64                           ;ADDWF PORTB, F
+    65     0019  0820               	movf	32,w
+    66     001A  3C0A               	sublw	10
+    67     001B  1903               	btfsc	3,2
+    68     001C  01A0               	clrf	32
+    69     001D  2200               	call	table	; W=table(index)
+    70     001E  0086               	movwf	6	; PORTB=W
+    71     001F  0AA0               	incf	32,f
+    72     0020  0008               	return
+    73                           
+    74                           	psect	table
+    75     0200                     	org	512
+    76     0200                     table:
+    77     0200  3002               	movlw	high table
+    78     0201  008A               	movwf	10
+    79     0202  0820               	movf	32,w
+    80     0203  0782               	addwf	2,f
+    81     0204  341C               	retlw	28
+    82     0205  340A               	retlw	10
+    83     0206  3414               	retlw	20
+    84     0207  3408               	retlw	8
+    85     0208  3422               	retlw	34
+    86     0209  3434               	retlw	52
+    87     020A  343D               	retlw	61
+    88     020B  3469               	retlw	105
+    89     020C  342B               	retlw	43
+    90     020D  34C8               	retlw	200
+    91                           
+    92                           	psect	config
+    93                           
+    94                           ;Config register CONFIG @ 0x2007
+    95                           ;	Oscillator Selection bits
+    96                           ;	FOSC = INTOSCIO, INTOSC oscillator: I/O function on RA6/OSC2/CLKOUT pin, I/O function on RA7/OSC1/
+      +                          CLKIN
+    97                           ;	Watchdog Timer Enable bit
+    98                           ;	WDTE = OFF, WDT disabled
+    99                           ;	Power-up Timer Enable bit
+   100                           ;	PWRTE = OFF, PWRT disabled
+   101                           ;	RA5/MCLR/VPP Pin Function Select bit
+   102                           ;	MCLRE = OFF, RA5/MCLR/VPP pin function is digital input, MCLR internally tied to VDD
+   103                           ;	Brown-out Detect Enable bit
+   104                           ;	BOREN = ON, BOD enabled
+   105                           ;	Low-Voltage Programming Enable bit
+   106                           ;	LVP = OFF, RB4/PGM pin has digital I/O function, HV on MCLR must be used for programming
+   107                           ;	Data EE Memory Code Protection bit
+   108                           ;	CPD = OFF, Data memory code protection off
+   109                           ;	Flash Program Memory Code Protection bit
+   110                           ;	CP = OFF, Code protection off
+   111     2007                     	org	8199
+   112     2007  3F58               	dw	16216
+
+
+Microchip Technology PIC Macro Assembler V2.41 build 20230208172133 
+Symbol Table                                                                                               Thu Aug 29 20:13:19 2024
+
+                       PCL 0002                        TMR0 0001                        help 0021                        main 0000  
+                      init 0003                        loop 0001                        work 0010                       PORTB 0006  
+                     TRISB 0086                       index 0020                       table 0200                      PCLATH 000A  
+                    INTCON 000B                      STATUS 0003                  OPTION_REG 0081  
